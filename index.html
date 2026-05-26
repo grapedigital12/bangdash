@@ -1,97 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bangdash – Food Delivered Fast</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>Bangdash – Delivering Happiness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- ======= NAVBAR ======= -->
   <nav class="navbar">
-    <div class="logo">🍜 Bangdash</div>
-    <div class="nav-links">
-      <a href="#" onclick="showSection('home')">Home</a>
-      <a href="#" onclick="showSection('orders')">My Orders</a>
+    <div class="nav-left">
+      <!-- BANGDASH LOGO SVG -->
+      <div class="logo" onclick="showPage('home')">
+        <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="38" height="38" rx="10" fill="#FF3008"/>
+          <path d="M8 19C8 13 12.5 9 18 9H22C27 9 30 12.5 30 17C30 21.5 27 25 22 25H18L15 29H11L14 25C10.5 23.5 8 21.5 8 19Z" fill="white"/>
+          <circle cx="16" cy="18" r="2.5" fill="#FF3008"/>
+          <circle cx="23" cy="18" r="2.5" fill="#FF3008"/>
+        </svg>
+        <span class="logo-text">Bangdash</span>
+      </div>
+
+      <!-- Address -->
+      <div class="nav-address" onclick="openAddressModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span id="currentAddress">New York, NY</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
     </div>
-    <div class="cart-btn" onclick="toggleCart()">
-      🛒 Cart <span class="cart-count" id="cartCount">0</span>
+
+    <div class="nav-search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="globalSearch" placeholder="Search for restaurant or food..." oninput="handleGlobalSearch()"/>
+    </div>
+
+    <div class="nav-right">
+      <button class="nav-btn" onclick="showPage('orders')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+        Orders
+      </button>
+      <button class="cart-nav-btn" onclick="toggleCart()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Cart</span>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </button>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="heroSection">
-    <div class="hero-content">
-      <h1>Hungry? <br><span>We Got You.</span></h1>
-      <p>Hot meals from the best local restaurants, delivered to your door in minutes.</p>
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search for food or restaurant..." oninput="filterItems()"/>
-        <button onclick="filterItems()">Search</button>
+  <!-- ======= HOME PAGE ======= -->
+  <div id="homePage">
+
+    <!-- HERO BANNER -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Order food & groceries<br/>delivered to your door</h1>
+        <p>Fast delivery from the best restaurants in your area</p>
+        <div class="hero-search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <input type="text" placeholder="Enter delivery address" id="addressInput" value="New York, NY"/>
+          <button onclick="setAddress()">Find Food</button>
+        </div>
+        <div class="hero-badges">
+          <span>🚀 30-min delivery</span>
+          <span>💰 No minimum order</span>
+          <span>⭐ 500+ restaurants</span>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-food-circle">
+          <div class="food-ring ring1">
+            <span style="top:0;left:50%;transform:translateX(-50%)">🍕</span>
+            <span style="bottom:0;left:50%;transform:translateX(-50%)">🍔</span>
+            <span style="left:0;top:50%;transform:translateY(-50%)">🍣</span>
+            <span style="right:0;top:50%;transform:translateY(-50%)">🌮</span>
+          </div>
+          <div class="food-ring ring2">
+            <span style="top:10%;right:10%">🍜</span>
+            <span style="bottom:10%;right:10%">🍰</span>
+            <span style="bottom:10%;left:10%">🥗</span>
+            <span style="top:10%;left:10%">🍗</span>
+          </div>
+          <div class="center-logo-ring">
+            <svg width="60" height="60" viewBox="0 0 38 38" fill="none"><rect width="38" height="38" rx="10" fill="#FF3008"/><path d="M8 19C8 13 12.5 9 18 9H22C27 9 30 12.5 30 17C30 21.5 27 25 22 25H18L15 29H11L14 25C10.5 23.5 8 21.5 8 19Z" fill="white"/><circle cx="16" cy="18" r="2.5" fill="#FF3008"/><circle cx="23" cy="18" r="2.5" fill="#FF3008"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROMO BANNERS -->
+    <section class="promos">
+      <div class="promo-card promo-red">
+        <div>
+          <h3>Free Delivery</h3>
+          <p>On your first 3 orders</p>
+          <button>Order now</button>
+        </div>
+        <span class="promo-emoji">🛵</span>
+      </div>
+      <div class="promo-card promo-orange">
+        <div>
+          <h3>30% Off Today</h3>
+          <p>Selected restaurants only</p>
+          <button>Explore deals</button>
+        </div>
+        <span class="promo-emoji">🔥</span>
+      </div>
+      <div class="promo-card promo-dark">
+        <div>
+          <h3>Bangdash Pass</h3>
+          <p>Unlimited free delivery</p>
+          <button>Get $0 delivery</button>
+        </div>
+        <span class="promo-emoji">💎</span>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="section">
+      <h2 class="section-title">What are you craving?</h2>
+      <div class="categories-grid">
+        <div class="cat-item active" onclick="filterByCategory('all',this)">
+          <div class="cat-icon">🍽️</div>
+          <span>All</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('pizza',this)">
+          <div class="cat-icon">🍕</div>
+          <span>Pizza</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('burger',this)">
+          <div class="cat-icon">🍔</div>
+          <span>Burgers</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('sushi',this)">
+          <div class="cat-icon">🍣</div>
+          <span>Sushi</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('tacos',this)">
+          <div class="cat-icon">🌮</div>
+          <span>Mexican</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('noodles',this)">
+          <div class="cat-icon">🍜</div>
+          <span>Noodles</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('chicken',this)">
+          <div class="cat-icon">🍗</div>
+          <span>Chicken</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('salad',this)">
+          <div class="cat-icon">🥗</div>
+          <span>Healthy</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('dessert',this)">
+          <div class="cat-icon">🍰</div>
+          <span>Desserts</span>
+        </div>
+        <div class="cat-item" onclick="filterByCategory('drinks',this)">
+          <div class="cat-icon">🧃</div>
+          <span>Drinks</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED RESTAURANTS -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title" id="restaurantTitle">Featured Restaurants</h2>
+        <button class="see-all">See all</button>
+      </div>
+      <div class="restaurants-grid" id="restaurantsGrid"></div>
+    </section>
+
+  </div><!-- end homePage -->
+
+  <!-- ======= RESTAURANT PAGE ======= -->
+  <div id="restaurantPage" style="display:none">
+    <div class="restaurant-hero" id="restaurantHero">
+      <button class="back-btn" onclick="showPage('home')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back
+      </button>
+      <div class="restaurant-hero-info" id="restaurantHeroInfo"></div>
+    </div>
+
+    <div class="restaurant-body">
+      <!-- Menu categories sidebar -->
+      <div class="menu-sidebar" id="menuSidebar"></div>
+      <!-- Menu items -->
+      <div class="menu-content">
+        <h3 class="menu-section-title" id="menuSectionTitle">Popular Items</h3>
+        <div class="menu-items-grid" id="menuItemsGrid"></div>
       </div>
     </div>
-    <div class="hero-img">🍕</div>
-  </section>
+  </div>
 
-  <!-- CATEGORIES -->
-  <section class="categories" id="home">
-    <h2>Browse Categories</h2>
-    <div class="category-list">
-      <div class="cat-card active" onclick="filterCategory('all', this)">🍽️ All</div>
-      <div class="cat-card" onclick="filterCategory('pizza', this)">🍕 Pizza</div>
-      <div class="cat-card" onclick="filterCategory('burger', this)">🍔 Burgers</div>
-      <div class="cat-card" onclick="filterCategory('sushi', this)">🍣 Sushi</div>
-      <div class="cat-card" onclick="filterCategory('tacos', this)">🌮 Tacos</div>
-      <div class="cat-card" onclick="filterCategory('noodles', this)">🍜 Noodles</div>
-      <div class="cat-card" onclick="filterCategory('dessert', this)">🍰 Desserts</div>
+  <!-- ======= ORDERS PAGE ======= -->
+  <div id="ordersPage" style="display:none">
+    <div class="page-container">
+      <h2 class="page-title">My Orders</h2>
+      <div id="ordersListContainer">
+        <div class="empty-state">
+          <div class="empty-icon">📦</div>
+          <h3>No orders yet</h3>
+          <p>Your order history will appear here</p>
+          <button onclick="showPage('home')" class="btn-primary">Start ordering</button>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- MENU -->
-  <section class="menu-section">
-    <h2 id="menuTitle">Popular Near You</h2>
-    <div class="menu-grid" id="menuGrid"></div>
-  </section>
+  <!-- ======= CART DRAWER ======= -->
+  <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>Your Cart</h3>
+      <button class="close-btn" onclick="toggleCart()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
 
-  <!-- CART SIDEBAR -->
-  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-  <div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header">
-      <h3>🛒 Your Cart</h3>
-      <button class="close-cart" onclick="toggleCart()">✕</button>
+    <div class="cart-restaurant-name" id="cartRestaurantName" style="display:none"></div>
+
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty">
+        <div style="font-size:3rem;margin-bottom:12px">🛒</div>
+        <p>Your cart is empty</p>
+        <small>Add items from a restaurant to get started</small>
+      </div>
     </div>
-    <div class="cart-items" id="cartItems">
-      <div class="empty-cart">Your cart is empty 😕<br><small>Add some delicious food!</small></div>
-    </div>
+
     <div class="cart-footer" id="cartFooter" style="display:none">
-      <div class="cart-total">Total: <strong id="cartTotal">$0.00</strong></div>
-      <button class="checkout-btn" onclick="placeOrder()">Place Order 🚀</button>
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <span id="subtotalAmt">$0.00</span>
+      </div>
+      <div class="cart-subtotal">
+        <span>Delivery fee</span>
+        <span id="deliveryFeeAmt">$0.00</span>
+      </div>
+      <div class="cart-subtotal cart-total-row">
+        <span>Total</span>
+        <span id="totalAmt">$0.00</span>
+      </div>
+      <button class="checkout-btn" onclick="placeOrder()">Go to checkout →</button>
     </div>
   </div>
 
-  <!-- ORDERS SECTION -->
-  <section class="orders-section" id="ordersSection" style="display:none">
-    <h2>📦 My Orders</h2>
-    <div id="ordersList"><p class="no-orders">No orders yet. Start ordering!</p></div>
-  </section>
+  <!-- ======= SUCCESS MODAL ======= -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal-box">
+      <div class="modal-anim">🎉</div>
+      <h2>Order Confirmed!</h2>
+      <p>Your food is on the way! Estimated delivery:</p>
+      <div class="modal-eta" id="modalEta">35 min</div>
+      <div class="modal-tracking">
+        <div class="track-step done">
+          <div class="track-dot"></div>
+          <div><strong>Order received</strong><br/><small>Just now</small></div>
+        </div>
+        <div class="track-step active">
+          <div class="track-dot"></div>
+          <div><strong>Being prepared</strong><br/><small>Your food is cooking</small></div>
+        </div>
+        <div class="track-step">
+          <div class="track-dot"></div>
+          <div><strong>On the way</strong><br/><small>Soon</small></div>
+        </div>
+        <div class="track-step">
+          <div class="track-dot"></div>
+          <div><strong>Delivered</strong><br/><small>Estimated arrival</small></div>
+        </div>
+      </div>
+      <button onclick="closeModal()" class="btn-primary">Track Order</button>
+    </div>
+  </div>
 
-  <!-- TOAST -->
+  <!-- ======= TOAST ======= -->
   <div class="toast" id="toast"></div>
-
-  <!-- ORDER SUCCESS MODAL -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal">
-      <div class="modal-icon">🎉</div>
-      <h2>Order Placed!</h2>
-      <p>Your food is being prepared and will arrive in <strong id="deliveryTime"></strong> minutes.</p>
-      <button onclick="closeModal()">Track Order</button>
-    </div>
-  </div>
-
-  <footer>
-    <p>© 2026 Bangdash · Made with ❤️ for fast hungry people</p>
-  </footer>
 
   <script src="app.js"></script>
 </body>
